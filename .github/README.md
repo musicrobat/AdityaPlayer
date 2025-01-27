@@ -10,6 +10,11 @@ Aditya-Player is an advanced & powerful multi-featured Telegram vc streaming bot
 <h2>🤖 Aditya-Player Info</h2>
 <p title="Aditya-Player">Aditya-Player is an open-source Telegram multi-featured vc streaming bot developed by using the Python programming language and Pyrogram MTProto client library of the Telegram API and PyTgCalls library, a secure and reliable way to interact with the Telegram platform.</p>
 
+<h2>🐬 Host AdityaPlayer On Heroku</h2>
+
+[![Deploy On Heroku](https://www.herokucdn.com/deploy/button.svg)](https://www.heroku.com/deploy?template=https://github.com/adityahalder/adityaplayer)
+
+
 <h2>♨️ Host AdityaPlayer On VPS Server</h2>
 
 

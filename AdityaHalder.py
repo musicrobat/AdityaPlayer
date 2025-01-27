@@ -1,6 +1,6 @@
 import aiohttp, aiofiles, asyncio, base64, logging
 import os, platform, random, re, socket
-import sys, time, textwrap
+import sys, time, textwrap, yt_dlp
 
 from os import getenv
 from io import BytesIO
@@ -669,6 +669,31 @@ async def create_thumbnail(results, user_id):
 # Some Functions For VC Player
 
 
+async def get_youtube_stream(link):
+    loops = asyncio.get_running_loop()
+    def get_stream_url():
+        ydl_optssx = {
+            "format": "best",
+            "outtmpl": "downloads/%(id)s.%(ext)s",
+            "geo_bypass": True,
+            "nocheckcertificate": True,
+            "quiet": True,
+            "no_warnings": True,
+            "cookiefile": "cookies.txt",
+        }
+        x = yt_dlp.YoutubeDL(ydl_optssx)
+        info = x.extract_info(link, False)
+        xyz = info['url']
+        return xyz
+        
+    downloaded_file = await loops.run_in_executor(
+        None, get_stream_url
+    )
+    return downloaded_file
+
+
+
+
 async def add_active_media_chat(
     chat_id, stream_type
 ):
@@ -979,7 +1004,8 @@ async def stream_audio_or_video(client, message):
                 channel = result["channel"]["name"]
             except Exception:
                 channel = "Unknown Channel"
-        stream_file = url if url else result["link"]
+        stream_link = url if url else result["link"]
+        stream_file = await get_youtube_stream(stream_link)
         result_x = {
             "title": title_x,
             "id": vid_id,
